@@ -40,6 +40,8 @@
             this.textBoxOut = new System.Windows.Forms.TextBox();
             this.buttonSend = new System.Windows.Forms.Button();
             this.textBoxSend = new System.Windows.Forms.TextBox();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.buttonSendFile = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // buttonExit
@@ -138,11 +140,27 @@
             this.textBoxSend.TabIndex = 9;
             this.textBoxSend.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textBoxSend_KeyUp);
             // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.Filter = "Text files|*.txt";
+            // 
+            // buttonSendFile
+            // 
+            this.buttonSendFile.Location = new System.Drawing.Point(669, 7);
+            this.buttonSendFile.Name = "buttonSendFile";
+            this.buttonSendFile.Size = new System.Drawing.Size(43, 23);
+            this.buttonSendFile.TabIndex = 10;
+            this.buttonSendFile.Text = "File";
+            this.buttonSendFile.UseVisualStyleBackColor = true;
+            this.buttonSendFile.Click += new System.EventHandler(this.button1_Click_1);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(675, 189);
+            this.ClientSize = new System.Drawing.Size(744, 189);
+            this.Controls.Add(this.buttonSendFile);
             this.Controls.Add(this.textBoxSend);
             this.Controls.Add(this.buttonSend);
             this.Controls.Add(this.textBoxOut);
@@ -173,6 +191,8 @@
         private System.Windows.Forms.TextBox textBoxOut;
         private System.Windows.Forms.Button buttonSend;
         private System.Windows.Forms.TextBox textBoxSend;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.Button buttonSendFile;
     }
 }
 

@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows.Forms;
 
 namespace SerialMonitor
@@ -15,6 +9,7 @@ namespace SerialMonitor
     {
         int[] baudRate = { 9600, 115200 };
         string[] comPorts;
+        FileInfo fileInfo;
         //string buf;
 
         public Form1()
@@ -27,7 +22,10 @@ namespace SerialMonitor
             comboBox1.DataSource = comPorts;
             comboBox2.DataSource = baudRate;
             buttonSend.Enabled = false;
+            buttonSendFile.Enabled = false;
             //buttonClose.Enabled = false;
+
+            openFileDialog1.InitialDirectory = Application.StartupPath;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -59,6 +57,7 @@ namespace SerialMonitor
                 buttonConnect.Text = "Connect";
                 this.Text = "SerialMonitor";
                 buttonSend.Enabled = false;
+                buttonSendFile.Enabled = false;
                 buttonRefresh.Enabled = true;
                 textBoxOut.AppendText("Close Connect" + Environment.NewLine);
             }
@@ -90,6 +89,7 @@ namespace SerialMonitor
                     //buttonConnect.Enabled = false;
                     buttonRefresh.Enabled = false;
                     buttonSend.Enabled = true;
+                    buttonSendFile.Enabled = true;
                     //buttonClose.Enabled = true;
                 }
                 catch (Exception)
@@ -106,6 +106,7 @@ namespace SerialMonitor
             //buttonClose.Enabled = false;
             buttonConnect.Enabled = true;
             buttonSend.Enabled = false;
+            buttonSendFile.Enabled = false;
             textBoxOut.AppendText("Close Connect" + Environment.NewLine);            
         }
 
@@ -128,6 +129,24 @@ namespace SerialMonitor
         private void textBoxSend_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter) buttonSend_Click(new object(), new EventArgs());
+        }
+
+        private async void button1_Click_1(object sender, EventArgs e)
+        {
+            if (serialPort1.IsOpen)
+            {
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    fileInfo = new FileInfo(openFileDialog1.FileName);
+                    
+                    StreamReader sr = new StreamReader(openFileDialog1.FileName);
+                    string str = await sr.ReadToEndAsync();
+                    sr.Close();
+                    serialPort1.Write(str);
+                    textBoxOut.AppendText("File was send: " + fileInfo.Name + " size: " + fileInfo.Length.ToString());
+                    //string[] array = data.Split(' ');
+                }
+            }
         }
     }
 }
